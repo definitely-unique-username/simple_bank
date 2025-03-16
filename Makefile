@@ -8,6 +8,6 @@ sqlc:
 	sqlc generate
 
 test:
-	go test github.com/definitely-unique-username/simple_bank/db/sqlc -run TestMain
+	go test -v -cover ./...
 
 .PHONY: migrateup migratedown sqlc test
