@@ -1,0 +1,11 @@
+version: "2"
+sql:
+    - engine: "postgresql"
+      queries: "./db/sqlc/queries"
+      schema: "./db/migrations"
+      gen:
+        go:
+            out: "./db/sqlc"
+            package: "db"
+            emit_json_tags: true
+            
