@@ -6,3 +6,8 @@ migratedown:
 
 sqlc:
 	sqlc generate
+
+test:
+	go test github.com/definitely-unique-username/simple_bank/db/sqlc -run TestMain
+
+.PHONY: migrateup migratedown sqlc test
