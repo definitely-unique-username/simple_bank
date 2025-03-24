@@ -41,7 +41,9 @@ jobs:
       run: | 
         curl -L https://github.com/golang-migrate/migrate/releases/download/v4.18.2/migrate.linux-amd64.tar.gz | tar xvz
         ls
+        echo 123
         sudo mv migrate /usr/bin/migrate
+        echo 234
         ls /usr/bin
         which migrate
 
