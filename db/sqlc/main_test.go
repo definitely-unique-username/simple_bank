@@ -7,25 +7,21 @@ import (
 	"os"
 	"testing"
 
+	"github.com/definitely-unique-username/simple_bank/util"
 	_ "github.com/lib/pq"
-)
-
-const (
-	dbDriver = "postgres"
-	dbSource = "postgresql://root:postgres@localhost:5432/simple_bank?sslmode=disable"
 )
 
 var testQueries *Queries
 var testDB *sql.DB
 
 func TestMain(m *testing.M) {
-	// Use test database URL from environment if provided
-	dbURL := os.Getenv("SIMPLE_BANK_DB_SOURCE")
-	if dbURL == "" {
-		dbURL = dbSource
+	config, err := util.LoadConfig("../..", ".env")
+
+	if err != nil {
+		log.Fatal("failed to read config", err)
 	}
 
-	conn, err := sql.Open(dbDriver, dbURL)
+	conn, err := sql.Open(config.DBDriver, config.DBSource)
 	if err != nil {
 		log.Fatal("cannot connect to db:", err)
 	}

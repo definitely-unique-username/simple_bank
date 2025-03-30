@@ -46,9 +46,9 @@ RETURNING id, owner, balance, currency, created_at
 `
 
 type CreateAccountParams struct {
-	Owner    string   `json:"owner"`
-	Balance  int64    `json:"balance"`
-	Currency Currency `json:"currency"`
+	Owner    string `json:"owner"`
+	Balance  int64  `json:"balance"`
+	Currency string `json:"currency"`
 }
 
 func (q *Queries) CreateAccount(ctx context.Context, arg CreateAccountParams) (Account, error) {
@@ -129,7 +129,7 @@ func (q *Queries) ListAccounts(ctx context.Context, arg ListAccountsParams) ([]A
 		return nil, err
 	}
 	defer rows.Close()
-	var items []Account
+	items := []Account{}
 	for rows.Next() {
 		var i Account
 		if err := rows.Scan(
