@@ -43,7 +43,7 @@ func (s *Server) createAccount(ctx *gin.Context) {
 		return
 	}
 
-	ctx.JSON(http.StatusCreated, gin.H{"account": account})
+	ctx.JSON(http.StatusCreated, account)
 }
 
 func (s *Server) getAccount(ctx *gin.Context) {
@@ -66,7 +66,7 @@ func (s *Server) getAccount(ctx *gin.Context) {
 		return
 	}
 
-	ctx.JSON(http.StatusOK, gin.H{"account": account})
+	ctx.JSON(http.StatusOK, account)
 }
 
 func (s *Server) getAccounts(ctx *gin.Context) {
@@ -89,5 +89,5 @@ func (s *Server) getAccounts(ctx *gin.Context) {
 		return
 	}
 
-	ctx.JSON(http.StatusOK, gin.H{"accounts": accounts})
+	ctx.JSON(http.StatusOK, accounts)
 }
