@@ -14,12 +14,12 @@ func TestJWTMaker(t *testing.T) {
 
 	require.NoError(t, err)
 
-	username := util.RandOwner()
+	userId := util.RandInt(1, 10)
 	duration := time.Minute
 	issuedAt := time.Now()
 	expiredAt := issuedAt.Add(duration)
 
-	token, err := maker.CreateToken(username, duration)
+	token, err := maker.CreateToken(userId, duration)
 
 	require.NoError(t, err)
 	require.NotEmpty(t, token)
@@ -30,7 +30,7 @@ func TestJWTMaker(t *testing.T) {
 	require.NotEmpty(t, payload)
 
 	require.NotZero(t, payload.ID)
-	require.Equal(t, payload.Username, username)
+	require.Equal(t, payload.UserID, userId)
 	require.WithinDuration(t, payload.IssuedAt, issuedAt, time.Second)
 	require.WithinDuration(t, payload.ExpiredAt, expiredAt, time.Second)
 }
@@ -40,7 +40,7 @@ func TestExpiredJWT(t *testing.T) {
 
 	require.NoError(t, err)
 
-	token, err := maker.CreateToken(util.RandOwner(), -time.Minute)
+	token, err := maker.CreateToken(util.RandInt(1, 10), -time.Minute)
 
 	require.NoError(t, err)
 	require.NotEmpty(t, token)
@@ -53,7 +53,7 @@ func TestExpiredJWT(t *testing.T) {
 }
 
 func TestInvalidJWTAlgorithName(t *testing.T) {
-	payload, err := NewPayload(util.RandOwner(), time.Minute)
+	payload, err := NewPayload(util.RandInt(1, 10), time.Minute)
 
 	require.NoError(t, err)
 

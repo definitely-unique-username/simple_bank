@@ -1,6 +1,7 @@
 package token
 
 import (
+	"strconv"
 	"strings"
 	"time"
 
@@ -20,8 +21,8 @@ func NewPasetoMaker(symmetricalKey string) Maker {
 	}
 }
 
-func (m *PasetoMaker) CreateToken(username string, duration time.Duration) (string, error) {
-	payload, err := NewPayload(username, duration)
+func (m *PasetoMaker) CreateToken(userID int64, duration time.Duration) (string, error) {
+	payload, err := NewPayload(userID, duration)
 
 	if err != nil {
 		return "", err
@@ -30,7 +31,7 @@ func (m *PasetoMaker) CreateToken(username string, duration time.Duration) (stri
 	token := paseto.NewToken()
 
 	token.SetString("id", payload.ID.String())
-	token.SetString("username", payload.Username)
+	token.SetString("userId", strconv.FormatInt(payload.UserID, 10))
 	token.SetIssuedAt(payload.IssuedAt)
 	token.SetNotBefore(payload.IssuedAt)
 	token.SetExpiration(payload.ExpiredAt)
@@ -68,8 +69,13 @@ func extractPayload(t *paseto.Token) (*Payload, error) {
 		return nil, err
 	}
 
-	username, err := t.GetString("username")
+	userID, err := t.GetString("userId")
 
+	if err != nil {
+		return nil, err
+	}
+
+	userIDInt, err := strconv.ParseInt(userID, 10, 64)
 	if err != nil {
 		return nil, err
 	}
@@ -88,7 +94,7 @@ func extractPayload(t *paseto.Token) (*Payload, error) {
 
 	return &Payload{
 		ID:        uuid.MustParse(id),
-		Username:  username,
+		UserID:    userIDInt,
 		IssuedAt:  issuedAt,
 		ExpiredAt: expiredAt,
 	}, nil
