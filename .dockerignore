@@ -1,0 +1,6 @@
+.github
+.dockerignore
+Docerfile
+docker-compose.yaml
+Makefile
+sqlc.yaml
