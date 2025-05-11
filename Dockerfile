@@ -14,4 +14,4 @@ COPY db/migrations ./migrations
 RUN chmod +x ./migrate
 
 EXPOSE 3000
-CMD ["sh", "-c", "echo 'Current directory:'; pwd; echo 'Migrations directory contents:'; ls -la /app/migrations; echo 'Running migrations...'; /app/migrate -path /app/migrations -database \"$DB_SOURCE\" -verbose up && echo 'Starting application...' && /app/main"]
+CMD ["sh", "-c", "echo 'Current directory:'; pwd; echo 'Migrations directory contents:'; ls -la /app/migrations; echo 'Running migrations...'; source /app/.env; /app/migrate -path /app/migrations -database \"$DB_SOURCE\" -verbose up && echo 'Starting application...' && /app/main"]
