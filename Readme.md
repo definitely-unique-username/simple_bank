@@ -6,5 +6,7 @@ TODOS:
 2. Remove IAM role
 3. Remove ECR
 4. Remove simple_bank db from RDS
+5. Remove secrets (Secret Manager)
+6. Remove access key id for the user (see IAM)
 
 region: eu-north-1
