@@ -21,11 +21,11 @@ func NewPasetoMaker(symmetricalKey string) Maker {
 	}
 }
 
-func (m *PasetoMaker) CreateToken(userID int64, duration time.Duration) (string, error) {
+func (m *PasetoMaker) CreateToken(userID int64, duration time.Duration) (string, *Payload, error) {
 	payload, err := NewPayload(userID, duration)
 
 	if err != nil {
-		return "", err
+		return "", payload, err
 	}
 
 	token := paseto.NewToken()
@@ -36,7 +36,7 @@ func (m *PasetoMaker) CreateToken(userID int64, duration time.Duration) (string,
 	token.SetNotBefore(payload.IssuedAt)
 	token.SetExpiration(payload.ExpiredAt)
 
-	return token.V4Encrypt(m.symmetricalKey, m.implicit), nil
+	return token.V4Encrypt(m.symmetricalKey, m.implicit), payload, nil
 }
 
 func (m *PasetoMaker) VerifyToken(token string) (*Payload, error) {

@@ -38,6 +38,9 @@ func NewServer(config *util.Config, store db.Store) *Server {
 	usersGroup.POST("/", server.createUser)
 	usersGroup.POST("/login", server.loginUser)
 
+	tokenGroup := router.Group("/token")
+	tokenGroup.POST("/renew", server.renewAccessToken)
+
 	transfersGroup := router.Group("/transfers", authMiddleware(server.tokenMaker))
 	transfersGroup.POST("/", server.createTransfer)
 

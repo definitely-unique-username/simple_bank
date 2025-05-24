@@ -1,5 +1,6 @@
 migration:
 	migrate create -ext sql -dir db/migrations -seq $(name)
+# make migration name=new_name
 
 migrateup:
 	migrate -path db/migrations -database "postgresql://root:postgres@localhost:5432/simple_bank?sslmode=disable" -verbose up
