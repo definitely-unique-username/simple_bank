@@ -14,11 +14,11 @@ type Server struct {
 	config     util.Config
 }
 
-func NewServer(config *util.Config, store db.Store) *Server {
+func NewServer(config util.Config, store db.Store) *Server {
 	server := &Server{
 		store:      store,
 		tokenMaker: token.NewPasetoMaker(config.SymmetricalKey),
-		config:     *config,
+		config:     config,
 	}
 
 	return server
